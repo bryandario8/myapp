@@ -12,36 +12,34 @@
   <h4>Agregar una nueva factura</h4>
 
 
- <FORM action="" method="post">
+ <form action="/facturas" method="post">
     <P>
-    <LABEL for="num">Numero de factura: </LABEL>
-              <INPUT type="n" id="num"><BR>
-    <LABEL for="company" max-length="16">Nombre de la Empresa: </LABEL>
-              <INPUT type="text" id="company"><BR>
-    <LABEL for="time">Fecha: </LABEL>
-              <INPUT type="date" id="fecha"><BR>
-    <LABEL for="service">Tipo de servicios: </LABEL>
-   <select name="service">
-     <option>Agua Potable</option>
-     <option>Luz Eléctrica</option>
-     <option>Teléfono</option>
-   </select>
-   </br>
-    <LABEL for="debt">Cantidad Facturada: </LABEL>
-              <INPUT type="text" id="debt"><BR>
-    <LABEL for="state">Estado: </LABEL>
-   <select name="state">
-     <option>Pagado</option>
-     <option>Pendiente</option>
-     <option>Acumulado</option>
-   </select>
-</p>
-    
-    </P>
-      
+      <LABEL for="num">Numero de factura: </LABEL>
+                <INPUT type="n" id="num" name="num"><BR>
+      <LABEL for="company" max-length="16">Nombre de la Empresa: </LABEL>
+                <INPUT type="text" id="company" name="company"><BR>
+      <LABEL for="time">Fecha: </LABEL>
+                <INPUT type="date" id="fecha" name="time"><BR>
+      <LABEL for="service">Tipo de servicios: </LABEL>
+     <select name="service">
+       <option>Agua Potable</option>
+       <option>Luz Eléctrica</option>
+       <option>Teléfono</option>
+     </select>
+     </br>
+      <LABEL for="debt">Cantidad Facturada: </LABEL>
+                <INPUT type="text" id="debt" num="debt"><BR>
+      <LABEL for="state">Estado: </LABEL>
+     <select name="state">
+       <option>Pagado</option>
+       <option>Pendiente</option>
+       <option>Acumulado</option>
+     </select>
+     <br /><br />
+     <input type="submit" name="" value="GUARDAR"/>
+    </p>
   </form>
- </FORM>
- <form method="g
+ 
   
 
 </body>

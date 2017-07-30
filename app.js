@@ -26,6 +26,12 @@ router.get('/', function(req, res) {
 // API routes
 var facturas = express.Router();
 
+facturas.get('/',(req,res) => {
+  res.sendFile(__dirname + '/index.html')
+  
+});
+
+
 facturas.route('/facturas')  
   .get(FacturaCtrl.findAllFacturas)
   .post(FacturaCtrl.addFactura);
@@ -35,22 +41,24 @@ facturas.route('/facturas/:id')
   .put(FacturaCtrl.updateFactura)
   .delete(FacturaCtrl.deleteFactura);
 
-app.use('/api', facturas);  
+app.use('/api', facturas);
 
 
-app.use(router);
+app.use(facturas);
+
 
 mongoose.connect('mongodb://localhost/facturas', function(error, respuesta) {
 	if (error) {
 		console.log('ERROR: connecting to Database ' +  error);
 	}
-	app.listen(8000, function() {
-		console.log("Node server running on http://localhost:8000");
-	});
+  /*
+	app.listen(8080, function() {
+		console.log("Node server running on http://localhost:5602");
+	});*/
 });
 
-app.listen(8000, function() {  
-  console.log("Node server running on http://localhost:8000");
+app.listen(8080, function() {  
+  console.log("Node server running on http://localhost:8080");
 });
 
 
