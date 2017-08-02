@@ -5,6 +5,7 @@ var express = require("express"),
     http = require("http");
     server = http.createServer(app);
     mongoose = require('mongoose');
+    path = require('path');
 
 app.use(bodyParser.urlencoded({ extended: false }));  
 app.use(bodyParser.json());  
@@ -25,12 +26,35 @@ router.get('/', function(req, res) {
 
 // API routes
 var facturas = express.Router();
-
+/*
 facturas.get('/',(req,res) => {
   res.sendFile(__dirname + '/index.html')
   
-});
+});*/
+//facturas.route('/')  
+/*
+facturas.get('/', (req,res) => {
+    res.sendFile(__dirname+'/index.html')
+  });
 
+facturas.route('/agregar')
+  .get( (req,res) => {
+    res.sendFile(__dirname + '/agregar.html') 
+  });
+*/
+
+facturas.get('/',FacturaCtrl.findAllFacturas);
+
+facturas.get('/nueva-factura', FacturaCtrl.create);
+
+facturas.get('/edit-factura/:id',FacturaCtrl.showEditFactura);
+
+facturas.route('/')  
+  .get(FacturaCtrl.findAllFacturas);
+
+facturas.route('/factura/:id')  
+  .get(FacturaCtrl.findAllFacturas)
+  .post(FacturaCtrl.updateFactura);
 
 facturas.route('/facturas')  
   .get(FacturaCtrl.findAllFacturas)
@@ -43,6 +67,9 @@ facturas.route('/facturas/:id')
 
 app.use('/api', facturas);
 
+app.set('views',path.join(__dirname,'views'));
+app.set('view engine', 'jade');
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(facturas);
 
