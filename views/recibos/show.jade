@@ -1,0 +1,30 @@
+h2 #{title}
+form(method='post',action=act)
+
+  p
+    label(for="num") Número:
+      input(type='text', name='num', value=recibo.num)
+
+  p
+    label(for="company") Empresa:
+      input(type='text', name='company', size=100, value=recibo.company)
+
+  p
+    label(for="time") Fecha:
+      input(type='date', name='time', size=100, value=recibo.time)
+
+  p
+    label(for="name") Nombre:
+      input(type='text', name='name', size=100, value=recibo.name)
+
+  p
+    label(for="debt") Deuda:
+      input(type='text', name='debt', size=100, value=recibo.debt)
+
+  p
+    label(for="concept") Concepto:
+      input(type='text', name='concept', value=recibo.concept)
+
+  p
+    input(type='submit', value='Guardar')
+

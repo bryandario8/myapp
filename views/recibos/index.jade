@@ -1,0 +1,36 @@
+block content
+  h1 Recibos
+  -if(recibo)
+    table(border='1')
+      thead
+        tr
+          th Número
+	  th Empresa
+          th Fecha
+          th Nombre
+          th Cantidad
+	  th Concepto
+          th &nbsp;
+          th &nbsp;
+          th &nbsp;
+      tbody
+        -each item in recibo
+          tr
+            td #{item.num}
+            td #{item.company}
+            td #{item.time}
+            td #{item.name}
+            td #{item.debt}
+            td #{item.concept}
+            td Ver
+            td 
+              a(href="/edit-recibo/#{item._id}") Editar
+            td 
+              a(href="/recibos/#{item._id}") Eliminar
+
+    p
+      a(href="/nuevo-recibo") Nuevo Recibo
+  -else
+    p No existen recibos creados
+   
+  
