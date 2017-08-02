@@ -33,9 +33,9 @@ exports.addRecibo = function(req, res, next) {
         num:      req.body.num,
         company:  req.body.company,
         time:     req.body.time,
-	name:     req.body.name,
+	names:    req.body.names,
         debt:     req.body.debt,
-        concept:    req.body.concept,
+        concept:  req.body.concept,
         summary:  req.body.summary
     });
 
@@ -63,9 +63,9 @@ exports.updateRecibo = function(req, res, next) {
         num:      req.body.num;
         company:  req.body.company;
         time:     req.body.time;
-	name:     req.body.name,
-        debt:     req.body.debt,
-        concept:    req.body.concept;
+	names:    req.body.names;
+        debt:     req.body.debt;
+        concept:  req.body.concept;
         summary:  req.body.summary;
 
         recibo.save(function(err) {

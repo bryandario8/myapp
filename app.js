@@ -13,8 +13,11 @@ app.use(methodOverride());
 
 
 //Import Models and Controllers
-var models = require('./models/facturas')(app,mongoose);
-var FacturaCtrl = require('./controllers/facturas');
+//var models = require('./models/facturas')(app,mongoose);
+//var FacturaCtrl = require('./controllers/facturas');
+
+var models = require('./models/recibos')(app,mongoose);
+var RecibosCtrl = require('./controllers/recibos');
 
 
 //Exmaple Route
@@ -26,6 +29,8 @@ router.get('/', function(req, res) {
 
 // API routes
 var facturas = express.Router();
+
+var recibos = express.Router();
 /*
 facturas.get('/',(req,res) => {
   res.sendFile(__dirname + '/index.html')
@@ -43,6 +48,46 @@ facturas.route('/agregar')
   });
 */
 
+
+
+app.set('views',path.join(__dirname,'views'));
+app.set('view engine', 'jade');
+app.use(express.static(path.join(__dirname, 'public')));
+
+
+//Routes Recibos
+
+recibos.get('/',ReciboCtrl.findAllRecibos);
+
+recibos.get('/nueva-recibo', ReciboCtrl.create);
+
+recibos.get('/edit-recibo/:id',ReciboCtrl.showEditRecibo);
+
+recibos.route('/')  
+  .get(ReciboCtrl.findAllRE);
+
+recibos.route('/recibo/:id')  
+  .get(ReciboCtrl.findAllRecibos)
+  .post(ReciboCtrl.updateRecibo);
+
+recibos.route('/recibos')  
+  .get(ReciboCtrl.findAllRecibos)
+  .post(ReciboCtrl.addRecibo);
+
+recibos.route('/recibos/:id')  
+  .get(ReciboCtrl.findById)
+  .put(ReciboCtrl.updateRecibo)
+  .delete(ReciboCtrl.deleteRecibo);
+
+app.use('/api', recibos);
+
+
+app.use(recibos);
+
+
+
+//Routes Facturas
+/*
 facturas.get('/',FacturaCtrl.findAllFacturas);
 
 facturas.get('/nueva-factura', FacturaCtrl.create);
@@ -67,12 +112,9 @@ facturas.route('/facturas/:id')
 
 app.use('/api', facturas);
 
-app.set('views',path.join(__dirname,'views'));
-app.set('view engine', 'jade');
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(facturas);
-
+*/
 
 mongoose.connect('mongodb://localhost/facturas', function(error, respuesta) {
 	if (error) {
