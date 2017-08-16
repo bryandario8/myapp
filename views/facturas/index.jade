@@ -1,5 +1,5 @@
 block content
-  h1 Facturas
+  h1 #{title}
   -if(factura)
     table(border='1')
       thead
@@ -25,8 +25,11 @@ block content
             td Ver
             td 
               a(href="/edit-factura/#{item._id}") Editar
-            td 
-              a(href="/facturas/#{item._id}") Eliminar
+            td
+              form(method="post", action="/facturas/#{item._id}",enctype='application/x-www-form-urlencoded')
+                input(type="hidden", name="_method", value="DELETE") 
+                button(type='submit').
+                  Eliminar
 
     p
       a(href="/nueva-factura") Nueva Factura

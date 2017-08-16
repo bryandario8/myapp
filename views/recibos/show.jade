@@ -26,5 +26,11 @@ form(method='post',action=act)
       input(type='text', name='concept', value=recibo.concept)
 
   p
-    input(type='submit', value='Guardar')
+    -if(put)
+      input(type="hidden", name="_method", value="PUT")
 
+  p
+    button#btnSubmit(type='submit').
+      Guardar
+
+  a(href="/") Cancelar
