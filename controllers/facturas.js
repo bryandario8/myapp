@@ -25,7 +25,7 @@ exports.findById = function(req, res) {
 };
 
 //POST - Insert a new Facturas in the DB
-exports.addFactura = function(req, res, next) {  
+exports.addFactura = function(req, res) {  
     console.log('POST');
     console.log(req.body);
 
@@ -46,32 +46,41 @@ exports.addFactura = function(req, res, next) {
     });
 };
 
-
 exports.showEditFactura = function(req, res) {  
     Factura.findById(req.params.id, function(err, factura) {
         
         if(err) return res.status(500).send(err.message);
-        else return res.render('../views/facturas/show', {title: 'Editar Factura', act: '/factura/'+req.params.id, factura:factura});
+        else return res.render('../views/facturas/show', {
+            put: true,
+            title: 'Editar Factura',
+            act: '/edit-factura/'+req.params.id+'/edit',
+            factura:factura});
         res.status(200).jsonp(factura);
         
     });
 };
 
 //PUT - Update a register already exists
-exports.updateFactura = function(req, res, next) {  
+exports.updateFactura = function(req, res) {  
     Factura.findById(req.params.id, function(err, factura) {
-        num:      req.body.num;
-        company:  req.body.company;
-        service:  req.body.service;
-        time:     req.body.time;
-        debt:     req.body.debt;
-        state:    req.body.state;
-        summary:  req.body.summary;
+        var num = req.body.num;
+        var company = req.body.company;
+        var service = req.body.service;
+        var time = req.body.time;
+        var debt = req.body.debt;
+        var state = req.body.state;
+        var summary = req.body.summary;
 
-        factura.save(function(err) {
-            if(err) return res.status(500).send(err.message);
-            else res.render('../views/facturas/index', {title: 'Lista de Facturas', factura: factura});
-            res.status(200).jsonp(factura);
+        factura.update({
+            num: num,
+            company: company,
+            service: service,
+            time: time,
+            debt: debt,
+            state: state,
+        },function(err) {
+            if(err) res.send("There was a problem updating the information to the database: " + err);
+            else res.redirect('/');
 
         });
     });
@@ -79,17 +88,18 @@ exports.updateFactura = function(req, res, next) {
 
 //DELETE - Delete a Factura with specified ID
 exports.deleteFactura = function(req, res) {  
-    Factura.findById(req.params.id, function(err, factura) {
-        factura.remove(function(err) {
-            if(err) res.render('../views/facturas/index', {title: 'Lista de Facturas', factura: factura});
-            else res.redirect('/')
-                //res.status(200).send();
-            
-        })
+    Factura.remove({_id: req.params.id}, function(err) {
+        if(err) res.send('Error al intentar eliminar la factura.');
+        else res.redirect('/');
+        
     });
 };
 
-exports.create = function (req, res, next) {
+exports.create = function (req, res) {
     
-  return res.render('../views/facturas/show', {title: 'Nueva Factura', act: '/facturas', factura: {}})
+  return res.render('../views/facturas/show', {
+    put: false,
+    title: 'Nuevo Ticket',
+    act: '/facturas',
+    factura: {}})
 }
