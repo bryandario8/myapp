@@ -16,7 +16,7 @@ exports.findAllRecibos = function(req, res) {
 
 //GET - Return a Recibos with specified ID
 exports.findById = function(req, res) {  
-    REcibo.findById(req.params.id, function(err, recibo) {
+    Recibo.findById(req.params.id, function(err, recibo) {
     if(err) return res.send(500, err.message);
 
     console.log('GET /recibo/' + req.params.id);
@@ -25,7 +25,7 @@ exports.findById = function(req, res) {
 };
 
 //POST - Insert a new Recibos in the DB
-exports.addRecibo = function(req, res, next) {  
+exports.addRecibo = function(req, res) {  
     console.log('POST');
     console.log(req.body);
 
@@ -46,32 +46,42 @@ exports.addRecibo = function(req, res, next) {
     });
 };
 
-
 exports.showEditRecibo = function(req, res) {  
-    REcibo.findById(req.params.id, function(err, recibo) {
+    Recibo.findById(req.params.id, function(err, recibo) {
         
         if(err) return res.status(500).send(err.message);
-        else return res.render('../views/recibos/show', {title: 'Editar Recibo', act: '/recibo/'+req.params.id, recibo:recibo});
+        else return res.render('../views/recibos/show', {
+            put: true,
+            title: 'Editar Recibo',
+            act: '/edit-recibo/'+req.params.id+'/edit',
+            recibo:recibo});
         res.status(200).jsonp(recibo);
         
     });
 };
 
+
 //PUT - Update a register already exists
 exports.updateRecibo = function(req, res, next) {  
     Recibo.findById(req.params.id, function(err, recibo) {
-        num:      req.body.num;
-        company:  req.body.company;
-        time:     req.body.time;
-	names:    req.body.names;
-        debt:     req.body.debt;
-        concept:  req.body.concept;
-        summary:  req.body.summary;
+        var num = req.body.num;
+        var company = req.body.company;
+        var time = req.body.time;
+	var names = req.body.names;
+        var debt = req.body.debt;
+        var concept = req.body.concept;
+        var summary = req.body.summary;
 
-        recibo.save(function(err) {
-            if(err) return res.status(500).send(err.message);
-            else res.render('../views/recibos/index', {title: 'Lista de Recibos', recibo: recibo});
-            res.status(200).jsonp(recibo);
+        recibo.update({
+            num: num,
+            company: company,
+            time: time,
+	    names: names,
+            debt: debt,
+            concept: concept,
+        },function(err) {
+            if(err) res.send("There was a problem updating the information to the database: " + err);
+            else res.redirect('/');
 
         });
     });
@@ -79,17 +89,18 @@ exports.updateRecibo = function(req, res, next) {
 
 //DELETE - Delete a Recibo with specified ID
 exports.deleteRecibo = function(req, res) {  
-    Recibo.findById(req.params.id, function(err, recibo) {
-        recibo.remove(function(err) {
-            if(err) res.render('../views/recibos/index', {title: 'Lista de recibos', recibo: recibo});
-            else res.redirect('/')
-                //res.status(200).send();
-            
-        })
+    Recibo.remove({_id: req.params.id}, function(err) {
+        if(err) res.send('Error al intentar eliminar el recibo.');
+        else res.redirect('/');
+        
     });
 };
 
-exports.create = function (req, res, next) {
+exports.create = function (req, res) {
     
-  return res.render('../views/recibos/show', {title: 'Nueva Recibo', act: '/recibos', recibo: {}})
+  return res.render('../views/recibos/show', {
+    put: false,
+    title: 'Nuevo Recibo',
+    act: '/recibos',
+    recibo: {}})
 }

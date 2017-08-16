@@ -99,7 +99,7 @@ exports.create = function (req, res) {
     
   return res.render('../views/facturas/show', {
     put: false,
-    title: 'Nuevo Ticket',
+    title: 'Nueva Factura',
     act: '/facturas',
     factura: {}})
 }
